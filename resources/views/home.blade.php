@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('tittle')
+Usuarios
+@endsection
+
 @section('content')
 <div class="col-12">
     @if (session('status'))

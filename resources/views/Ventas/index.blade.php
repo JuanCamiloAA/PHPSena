@@ -54,23 +54,28 @@ Lista de Ventas
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                        @foreach($Ventas as $Key => $value)
+                                        @foreach($Ventas as $value)
                                                 <tr>
-                                                    <td>{{ $value['IdVenta']}}</td>
-                                                    <td>{{ $value['Cliente'] }}</td>
-                                                    <td>{{ $value->Detalle->productos['nombre'] }}</td>
-                                                    <td>{{ $value['Precio'] }}</td>
-                                                    <td>
-                                                        @if($value['estado'])
+                                                    <td>{{$value->IdVentas}}</td>
+                                                    <td>{{ $value->nombre_Cliente }}</td>
+                                                    <td>{{ $value->nombre_Producto }}</td>
+                                                    <td>{{ $value->precio }}</td>
+                                                    <td class="text-center">
+                                                        @if($value->estado)
                                                             <span class="badge badge-success">Activo</span>
-                                                        @elseif(!$value['estado'])
+                                                        @elseif(!$value->estado)
                                                             <span class="badge badge-danger">Desactivado</span>
                                                         @endif
                                                     </td>
-                                                    <td>
-                                                        <a href="{{route('productos.show')}}"></a> Editar
-                                                        <br>
-                                                        Cambiar
+                                                    <td class=" d-flex justify-content-around " >
+
+                                                        <a href="" class="text-warning"><i class="fas fa-edit"></i></a>
+
+                                                        @if($value->estado)
+                                                            <a href="" class="text-danger"><i class="fas fa-times-circle"></i></a>
+                                                        @elseif(!$value->estado)
+                                                            <a href="" class="text-success"><i class="fas fa-check-circle"></i></a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
