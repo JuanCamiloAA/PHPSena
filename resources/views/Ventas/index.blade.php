@@ -43,16 +43,7 @@ Lista de Ventas
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Id#</th>
-                                                <th>Nombre Cliente</th>
-                                                <th>Productos</th>
-                                                <th>Precio</th>
-                                                <th>Estado</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </tfoot>
+                                       
                                         <tbody>
                                         @foreach($Ventas as $value)
                                                 <tr>

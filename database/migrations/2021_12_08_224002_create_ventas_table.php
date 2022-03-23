@@ -17,7 +17,6 @@ class CreateVentasTable extends Migration
             
             $table->BigIncrements('IdVentas');
             $table->String('nombre_Cliente');
-            $table->String('nombre_Producto');
             $table->float('precio',8,2);
             $table->boolean('estado');
            

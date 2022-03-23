@@ -6,7 +6,7 @@
 <div class="col-md-12 d-flex justify-content-center">
     <div class="card  mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="card-body">
-            <form action="/Agregar" method="post">
+            <form action="{{Route('detalle.store')}}" method="post" >
                 @csrf
                 <div class="form-group">
                     <div class="row">
@@ -74,7 +74,8 @@
 
 @section('script')
 <script>
-    
+
+
      function cargar_precio() {
 
         let precio = $("#producto option:selected").attr("precio");
@@ -91,24 +92,35 @@
         let precio = $("#precio").val();
 
         $("#tblProductos").append(`
-            <tr>
+            <tr id="tr-${producto_id}">
                 <td>
                     <input type="hidden" name="producto_id[]" value="${producto_id}"/>
-                    <input type="hidden" name="cantidad[]" value="${producto_id}"/>
+                    <input type="hidden" name="cantidades[]" value="${producto_id}"/>
                     ${producto_text}
                 </td>
                 <td>${cantidad}</td>
                 <td>${precio}</td>
-                <td>${parceInt(precio)* parceInt(cantidad)}</td>
-                <td>
-                    <button class="text-danger" ><i class="fas fa-trash-alt"></i></button>
+                <td>${parseInt(precio)* parseInt(cantidad)}</td>
+                <td class="text-center">
+                    <button  type="button" class="btn text-danger" onclick="eliminar(${producto_id},(${parseInt(cantidad) * parseInt(precio)}))"><i class="fas fa-trash-alt"></i></button>
                 </td>
             </tr>
         `);
             let precioT = $("#precio_total").val() || 0;
-            $("#precio_total").val(parceInt(precioT) + (parceInt(precio)* parceInt(cantidad)));
-        
+            $("#precio_total").val(parseInt(precioT) + (parseInt(precio)* parseInt(cantidad)));
+
+    
+            $("#producto").val('');
+            $("#cantidad").val('');
+            $("#precio").val('');
     };
+
+    function eliminar(id, precio){
+        $("#tr-"+id).remove();
+        let precioT = $("#precio_total").val() || 0;
+        $("#precio_total").val(parseInt(precioT) - precio);
+    };
+
 </script>
    
 

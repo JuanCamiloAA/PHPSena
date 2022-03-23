@@ -11,11 +11,10 @@ class Venta extends Model
 
     protected $primaryKey = 'IdVenta';
 
-    public $fillable = ['Cliente', 'Producto', 'Precio', 'Estado']; 
+    public $fillable = ['Cliente', 'Precio', 'Estado']; 
 
     public static $rules = [
         'Cliente'=>'required|min:3|max:100|string',
-        'Producto'=>'required|min:0|max:1000|string',
         'Precio'=>'required|min:0|max:100000',
         'estado'=>'in:1,0'
     ];

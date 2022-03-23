@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\producto;
+use App\Models\Venta;
+use DB;
 
 class DetalleController extends Controller
 {
@@ -36,7 +38,21 @@ class DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        try {
+            DB::beginTransaction();
+            $venta = Venta::create([
+                'Cliente' => $input["nombre-cliente"],
+                'Precio' => $this->precio($input[producto_id], $input[cantidades]),
+                'estado' => 1
+            ]);
+
+
+            DB::commit();
+        } catch (\Exception $e) {
+           DB::rollback();
+        }
+
     }
 
     /**
@@ -82,5 +98,13 @@ class DetalleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function precio($id, $cant){
+        $precio = 0;
+        foreach($id as $key => $value){
+            $productos = Producto::find($value);
+            $precio += ($productos->precio * $cant[$key]);
+        }
     }
 }
