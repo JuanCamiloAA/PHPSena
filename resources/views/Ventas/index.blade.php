@@ -39,7 +39,7 @@ Lista de Ventas
                                                 <th>Nombre Cliente</th>
                                                 <th>Productos</th>
                                                 <th>Precio</th>
-                                                {{-- <th>Estado</th> --}}
+                                                <th>Estado</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
@@ -49,36 +49,35 @@ Lista de Ventas
                                                 <tr>
                                                     <td>{{$value->IdVentas}}</td>
                                                     <td>{{ $value->nombre_Cliente }}</td>
-                                                    <td>
+                                                    <td id="text">
                                                         @foreach ($productos as $producto)
                                                             @if ($value->IdVentas === $producto->IdVentas)
-                                                                <ul class="list-group">
+                                                                <!-- <ul class="list-group">
                                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                         {{$producto->nombre}}
                                                                         <span class="badge badge-dark badge-pill">{{$producto->cantidad}}</span>
                                                                       </li>
-                                                                </ul>
+                                                                </ul> -->
+                                                                <span>{{$producto->nombre}}: <b>{{$producto->cantidad}},</b></span>
                                                             @endif
                                                             
                                                         @endforeach
                                                     </td>
                                                     <td>{{ $value->precio }}</td>
-                                                    {{-- <td class="text-center">
+                                                    <td class="text-center">
                                                         @if($value->estado)
                                                             <span class="badge badge-success">Realizada</span>
                                                         @elseif(!$value->estado)
                                                             <span class="badge badge-danger">Cancelada</span>
                                                         @endif
-                                                    </td> --}}
+                                                    </td>
                                                     <td class=" d-flex justify-content-around " >
 
-                                                        <a href="" class="text-warning"><i class="fas fa-edit"></i></a>
-
-                                                        {{-- @if($value->estado)
+                                                        @if($value->estado)
                                                             <a href="/ventas/{{$value->IdVentas}}/{{$value->estado}}" class="text-danger"><i class="fas fa-times-circle"></i></a>
                                                         @elseif(!$value->estado)
                                                             <a href="/ventas/{{$value->IdVentas}}/{{$value->estado}}" class="text-success"><i class="fas fa-check-circle"></i></a>
-                                                        @endif --}}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -95,6 +94,13 @@ Lista de Ventas
     </div>
 </div>
 
+<script>
 
+     let text = document.getElementById('text').innerText;
+     let cortar = text.slice(0,text.length-1)
+     console.log(cortar);
+     
+     document.getElementById('text').innerText = cortar
+</script>
 
 @endsection

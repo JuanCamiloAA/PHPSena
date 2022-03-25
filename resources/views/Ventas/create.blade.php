@@ -14,10 +14,10 @@
                            <input class="form-control" type="text" name="nombre_cliente" id="name" placeholder="Cliente"> 
                         </div>
                         <div class="col">
-                            <select class="form-control" name="producto" id="producto" onchange="cargar_precio()">
+                            <select class="form-control" name="producto" id="producto" onchange="todo()">
                                 <option value="" selected>Productos</option>
                                 @foreach($productos as $value)
-                                    <option precio="{{ $value->precio }}" value="{{ $value->IdProducto }}">{{ $value->nombre }}</option>
+                                    <option precio="{{ $value->precio }}" cant="{{$value->cantidad}}" value="{{ $value->IdProducto }}">{{ $value->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -26,6 +26,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
+                            <input type="hidden" name="cant" id="canti">
                             <input class="form-control" type="number" name="cantidad" id="cantidad" placeholder="Cantidad">
                         </div>
                         <div class="col">
@@ -75,6 +76,10 @@
 @section('script')
 <script>
 
+    function todo(){
+        cargar_precio(),
+        cargar_cantidad()
+    }
 
      function cargar_precio() {
 
@@ -84,14 +89,24 @@
         
         
     };
+    function cargar_cantidad() {
+
+    let cant = $("#producto option:selected").attr("cant");
+
+    $("#canti").val(cant);
+
+
+    };
 
     function agregar_producto() {
         let producto_id = $("#producto option:selected").val();
         let producto_text = $("#producto option:selected").text();
         let cantidad = $("#cantidad").val();
         let precio = $("#precio").val();
-
-        $("#tblProductos").append(`
+        let cant = $("#canti").val();
+        if (cantidad < cant) {
+            
+            $("#tblProductos").append(`
             <tr id="tr-${producto_id}">
                 
                     <input type="hidden" name="producto_id[]" value="${producto_id}"/>
@@ -107,13 +122,18 @@
                 </td>
             </tr>
         `);
-            let precioT = $("#precio_total").val() || 0;
-            $("#precio_total").val(parseInt(precioT) + (parseInt(precio)* parseInt(cantidad)));
+        
+        let precioT = $("#precio_total").val() || 0;
+        $("#precio_total").val(parseInt(precioT) + (parseInt(precio)* parseInt(cantidad)));
 
-    
-            $("#producto").val('');
-            $("#cantidad").val('');
-            $("#precio").val('');
+
+        $("#producto").val('');
+        $("#cantidad").val('');
+        $("#precio").val('');
+        } else {
+           //
+        }
+        
     };
 
     function eliminar(id, precio){

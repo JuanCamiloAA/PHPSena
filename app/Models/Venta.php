@@ -9,7 +9,7 @@ class Venta extends Model
 {
     public $table = 'Ventas';
 
-    protected $primaryKey = 'IdVenta';
+    protected $primaryKey = 'IdVentas';
 
     public $fillable = ['nombre_Cliente', 'precio', 'estado']; 
 

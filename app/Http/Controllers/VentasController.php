@@ -92,7 +92,9 @@ class VentasController extends Controller
     }
     public function changeState($id,$state)
     {
+        
         $vent = Venta::find($id);
+        
         $vent->update([
             'estado' => !$state
         ]);

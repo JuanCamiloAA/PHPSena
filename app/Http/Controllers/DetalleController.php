@@ -51,7 +51,7 @@ class DetalleController extends Controller
             
             foreach($input["producto_id"] as $key => $value){
                 DetalleVenta::create([
-                    "IdVentas" => $venta->IdVenta,
+                    "IdVentas" => $venta->IdVentas,
                     "IdProducto" => $value,
                     "cantidad" => $input["cantidades"][$key],
                 ]);
@@ -67,7 +67,7 @@ class DetalleController extends Controller
             return redirect()->route('ventas.index');
         } catch (\Exception $e) {
            DB::rollback();
-           alert()->error('Venta', $e);
+           alert()->error('Venta', 'No se pudo crear la venta');
            return redirect()->route('ventas.index');
 
         }
