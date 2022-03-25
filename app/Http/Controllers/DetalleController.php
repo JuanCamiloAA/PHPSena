@@ -27,7 +27,7 @@ class DetalleController extends Controller
      */
     public function create()
     {
-        $productos = Producto::all();
+        $productos = Producto::where('estado',1)->where('cantidad','!=',0)->get();
         return view("Ventas.create", compact('productos'));
     }
 

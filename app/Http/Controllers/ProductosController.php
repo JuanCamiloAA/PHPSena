@@ -18,7 +18,7 @@ class ProductosController extends Controller
     public function index()
     {
 
-        $productos = Producto::all();
+        $productos = Producto::where('cantidad','!=',0)->get();
 
         return view("Productos.index", compact("productos"));
     }
