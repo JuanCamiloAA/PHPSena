@@ -33,4 +33,5 @@ Route::resources([
     'detalle' => DetalleController::class
 ]);
 Route::get('/productos/{id}/{state}',[ProductosController::class,'change'])->name('change');
+Route::get('/ventas/{id}/{state}',[VentasController::class,'changeState'])->name('changeState');
 // Route::get('/Productos', [ProductosController::class, 'index']);

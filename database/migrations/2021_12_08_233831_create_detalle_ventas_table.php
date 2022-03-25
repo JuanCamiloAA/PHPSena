@@ -19,7 +19,6 @@ class CreateDetalleVentasTable extends Migration
             $table->foreign('IdProducto')->references('IdProducto')->on('productos');
             $table->unsignedBigInteger('IdVentas');  
             $table->foreign('IdVentas')->references('IdVentas')->on('ventas');
-            $table->float('Precio', 8,2);
             $table->integer('cantidad');
         });
     }

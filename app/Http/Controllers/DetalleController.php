@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\producto;
 use App\Models\Venta;
+use App\Models\DetalleVenta;
 use DB;
 
 class DetalleController extends Controller
@@ -38,21 +39,47 @@ class DetalleController extends Controller
      */
     public function store(Request $request)
     {
+
         $input = $request->all();
         try {
             DB::beginTransaction();
             $venta = Venta::create([
-                'Cliente' => $input["nombre-cliente"],
-                'Precio' => $this->precio($input[producto_id], $input[cantidades]),
-                'estado' => 1
+                'nombre_Cliente' => $input["nombre_cliente"],
+                'precio' => $this->precio($input["producto_id"], $input["cantidades"]),
+                'estado' => 1,
             ]);
+            
+            foreach($input["producto_id"] as $key => $value){
+                DetalleVenta::create([
+                    "IdVentas" => $venta->IdVenta,
+                    "IdProducto" => $value,
+                    "cantidad" => $input["cantidades"][$key],
+                ]);
 
+                $prod = Producto::find($value);
+                $prod ->update([
+                    "cantidad" => $prod ->cantidad - $input["cantidades"][$key],
+                ]);
+            }
 
             DB::commit();
+            alert()->success('Venta','Venta realizada con exito.');
+            return redirect()->route('ventas.index');
         } catch (\Exception $e) {
            DB::rollback();
+           alert()->error('Venta', $e);
+           return redirect()->route('ventas.index');
+
         }
 
+    }
+    public function precio($id, $cant){
+        $precio = 0;
+        foreach($id as $key => $value){
+            $productos = Producto::find($value);
+            $precio += ($productos->precio * $cant[$key]);
+        }
+        return $precio;
     }
 
     /**
@@ -100,11 +127,4 @@ class DetalleController extends Controller
         //
     }
 
-    public function precio($id, $cant){
-        $precio = 0;
-        foreach($id as $key => $value){
-            $productos = Producto::find($value);
-            $precio += ($productos->precio * $cant[$key]);
-        }
-    }
 }

@@ -6,12 +6,12 @@
 <div class="col-md-12 d-flex justify-content-center">
     <div class="card  mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="card-body">
-            <form action="{{Route('detalle.store')}}" method="post" >
+            <form action="{{route('detalle.store')}}" method="post" >
                 @csrf
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                           <input class="form-control" type="text" name="nombre-cliente" id="name" placeholder="Cliente"> 
+                           <input class="form-control" type="text" name="nombre_cliente" id="name" placeholder="Cliente"> 
                         </div>
                         <div class="col">
                             <select class="form-control" name="producto" id="producto" onchange="cargar_precio()">
@@ -93,9 +93,10 @@
 
         $("#tblProductos").append(`
             <tr id="tr-${producto_id}">
-                <td>
+                
                     <input type="hidden" name="producto_id[]" value="${producto_id}"/>
-                    <input type="hidden" name="cantidades[]" value="${producto_id}"/>
+                    <input type="hidden" name="cantidades[]" value="${cantidad}"/>
+                <td>
                     ${producto_text}
                 </td>
                 <td>${cantidad}</td>

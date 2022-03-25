@@ -18,8 +18,11 @@ class VentasController extends Controller
     {
 
         $Ventas = Venta::all();
+        $productos = Producto::select("productos.*", "detalle_ventas.*")->join("detalle_ventas", "productos.IdProducto", "=", "detalle_ventas.IdProducto")
+        // ->where("detalle_ventas.IdProducto")
+        ->get();
 
-        return view("Ventas.index", compact("Ventas"));
+        return view("Ventas.index", compact("Ventas", "productos"));
     }
 
     /**
@@ -85,6 +88,14 @@ class VentasController extends Controller
      */
     public function destroy($id)
     {
-        //
+       //
+    }
+    public function changeState($id,$state)
+    {
+        $vent = Venta::find($id);
+        $vent->update([
+            'estado' => !$state
+        ]);
+        return Redirect()->route('ventas.index');
     }
 }

@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleVenta extends Model
 {
-    public $table = 'DetalleProductos';
+    public $table = 'detalle_ventas';
 
     protected $primaryKey = 'IdDetalle';
 
+    public $fillable = ['IdVentas', 'IdProducto', 'cantidad']; 
+
+
     public static $rules = [
-        'IdVenta'=>'required|exists:Venta,IdVenta',
+        'IdVentas'=>'required|exists:Venta,IdVenta',
         'IdProducto'=>'required|exists:Producto,IdProducto',
-        'Precio'=>'required|min:0|max:100000',
-        'Cantidad'=>'required|min:0|max:1000'
+        'cantidad'=>'required|min:0|max:1000'
     ];
 
     public $timestamps = false;

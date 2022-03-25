@@ -39,7 +39,7 @@ Lista de Ventas
                                                 <th>Nombre Cliente</th>
                                                 <th>Productos</th>
                                                 <th>Precio</th>
-                                                <th>Estado</th>
+                                                {{-- <th>Estado</th> --}}
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
@@ -49,24 +49,36 @@ Lista de Ventas
                                                 <tr>
                                                     <td>{{$value->IdVentas}}</td>
                                                     <td>{{ $value->nombre_Cliente }}</td>
-                                                    <td>{{ $value->nombre_Producto }}</td>
-                                                    <td>{{ $value->precio }}</td>
-                                                    <td class="text-center">
-                                                        @if($value->estado)
-                                                            <span class="badge badge-success">Activo</span>
-                                                        @elseif(!$value->estado)
-                                                            <span class="badge badge-danger">Desactivado</span>
-                                                        @endif
+                                                    <td>
+                                                        @foreach ($productos as $producto)
+                                                            @if ($value->IdVentas === $producto->IdVentas)
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                        {{$producto->nombre}}
+                                                                        <span class="badge badge-dark badge-pill">{{$producto->cantidad}}</span>
+                                                                      </li>
+                                                                </ul>
+                                                            @endif
+                                                            
+                                                        @endforeach
                                                     </td>
+                                                    <td>{{ $value->precio }}</td>
+                                                    {{-- <td class="text-center">
+                                                        @if($value->estado)
+                                                            <span class="badge badge-success">Realizada</span>
+                                                        @elseif(!$value->estado)
+                                                            <span class="badge badge-danger">Cancelada</span>
+                                                        @endif
+                                                    </td> --}}
                                                     <td class=" d-flex justify-content-around " >
 
                                                         <a href="" class="text-warning"><i class="fas fa-edit"></i></a>
 
-                                                        @if($value->estado)
-                                                            <a href="" class="text-danger"><i class="fas fa-times-circle"></i></a>
+                                                        {{-- @if($value->estado)
+                                                            <a href="/ventas/{{$value->IdVentas}}/{{$value->estado}}" class="text-danger"><i class="fas fa-times-circle"></i></a>
                                                         @elseif(!$value->estado)
-                                                            <a href="" class="text-success"><i class="fas fa-check-circle"></i></a>
-                                                        @endif
+                                                            <a href="/ventas/{{$value->IdVentas}}/{{$value->estado}}" class="text-success"><i class="fas fa-check-circle"></i></a>
+                                                        @endif --}}
                                                     </td>
                                                 </tr>
                                             @endforeach
