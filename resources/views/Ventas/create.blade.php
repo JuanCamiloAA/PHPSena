@@ -4,11 +4,15 @@
 
 
 <div class="col-md-12 d-flex justify-content-center">
+
     <div class="card  mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="card-body">
             <form action="{{route('detalle.store')}}" method="post" >
                 @csrf
                 <div class="form-group">
+                <div class="row">
+                <div class="col-12" id="alt"></div>
+                </div>
                     <div class="row">
                         <div class="col">
                            <input class="form-control" type="text" name="nombre_cliente" id="name" placeholder="Cliente"> 
@@ -121,7 +125,7 @@
                     <button  type="button" class="btn text-danger" onclick="eliminar(${producto_id},(${parseInt(cantidad) * parseInt(precio)}))"><i class="fas fa-trash-alt"></i></button>
                 </td>
             </tr>
-        `);
+            `);
         
         let precioT = $("#precio_total").val() || 0;
         $("#precio_total").val(parseInt(precioT) + (parseInt(precio)* parseInt(cantidad)));
@@ -131,7 +135,17 @@
         $("#cantidad").val('');
         $("#precio").val('');
         } else {
-           //
+            $("#alt").append(`
+            <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+                <strong>¡Atención! {{ Auth::user()->name }}</strong>
+                <hr> 
+                 -${producto_text}- insuficiente, ${cant} productos disponibles.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            `)
+            
         }
         
     };

@@ -101,8 +101,6 @@ Lista de Ventas
      console.log(cortar);
      
      document.getElementById('text').innerText = cortar
-
 </script>
-
 
 @endsection
